@@ -1,0 +1,142 @@
+<!-- item_product.xml -->
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_15sdp" android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:cardUseCompatPadding="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/gradient_oren"
+        android:padding="@dimen/_14sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvMapel"
+            android:gravity="center"
+            android:drawablePadding="@dimen/_4sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matematika"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            app:drawableStartCompat="@drawable/ic_mapel"
+            app:drawableTint="@color/white" />
+        <TextView
+            android:id="@+id/tvKelas"
+            android:gravity="center"
+            android:drawablePadding="@dimen/_4sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XII IPA 1"
+            android:textSize="@dimen/_9sdp"
+            android:textColor="@color/white"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="@dimen/_4sdp"
+            app:drawableStartCompat="@drawable/ic_kelas"
+            app:drawableTint="@color/white" />
+    </LinearLayout>
+        <TextView
+            android:id="@+id/tvNamaUjian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UTS B. Indonesia"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvKodeUjian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XDJKSS"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvTanggal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12-09-2023"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:drawablePadding="@dimen/_4sdp"
+                app:drawableStartCompat="@drawable/ic_jadwal"
+                app:drawableTint="@color/white" />
+            <TextView
+                android:id="@+id/tvDurasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30 Menit"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="4dp"
+                android:drawablePadding="@dimen/_4sdp"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/ic_jam"
+                app:drawableTint="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="8dp">
+            <LinearLayout
+                android:id="@+id/lyiconEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:layout_weight="2">
+                <LinearLayout
+                    android:id="@+id/btnUbah"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_button_background"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_13sdp"
+                    android:backgroundTint="@color/kuning_sedang"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/_26sdp"
+                        android:layout_height="@dimen/_26sdp"
+                        android:src="@drawable/ic_edit"
+                        app:tint="@color/white"
+                        android:backgroundTint="@color/merah_tua"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_rounded"
+                        android:layout_marginRight="@dimen/_5sdp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etUbah"
+                        android:enabled="false"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:hint="Ubah"
+                        android:background="@null" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

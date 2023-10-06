@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/contentView"
+    tools:context=".activity.siswa.LockScreenActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_30sdp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/kuning_muda"
+            android:orientation="horizontal"
+            android:padding="@dimen/_12sdp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_rounded"
+                android:backgroundTint="@color/kuning_muda"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:39:00"
+                    android:textSize="@dimen/_13sdp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_refresh"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Refresh" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/kuning_muda"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/_4sdp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/btnSelesai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_rounded"
+                    android:backgroundTint="@color/kuning_muda"
+                    android:padding="@dimen/_8sdp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selesai"
+                        android:textSize="@dimen/_13sdp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:id="@+id/lyKonfirm"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:alpha="0.6"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="@dimen/_14sdp"
+                android:paddingLeft="@dimen/_14sdp"
+                android:gravity="bottom">
+                <!-- Card view with white background -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="50dp"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/background_rounded"
+                    android:backgroundTint="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warning"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:textSize="@dimen/_38sdp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/textViewOr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pastikan kamu telah menekan tombol selesai pada halaman ujian dan pastikan jawaban sudah tersubmit."
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_13sdp"
+                            android:gravity="center_horizontal" />
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnYakin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ya, Saya Sudah Selesai"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/_8sdp"
+                            android:backgroundTint="@color/biru_sedang"
+                            android:background="@drawable/rounded_button_background" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnKembali"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tidak, Kembali ke Ujian"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/rounded_button_background"
+                            android:backgroundTint="@color/biru_muda"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@android:color/white">
+                        <ImageView
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_80sdp"
+                            android:src="@drawable/ic_key"
+                            android:layout_gravity="center" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

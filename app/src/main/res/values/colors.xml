@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#FFCCCCCC</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF8D4E</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="dialog_primary">#FFB900</color>
+    <color name="dialog_primary_dark">#FFB900</color>
+    <color name="dialog_primary_light">#FFFFFF</color>
+    <color name="dialog_text_foreground">@android:color/white</color>
+
+    <color name="kuning_muda">#FFD740</color>
+    <color name="kuning_sedang">#FFB900</color>
+    <color name="kuning_tua">#FFA000</color>
+    <color name="hijau_muda">#81C784</color>
+    <color name="hijau_sedang">#4CAF50</color>
+    <color name="hijau_tua">#388E3C</color>
+    <color name="biru_muda">#64B5F6</color>
+    <color name="biru_sedang">#2196F3</color>
+    <color name="biru_tua">#1976D2</color>
+    <color name="ungu_muda">#CE93D8</color>
+    <color name="ungu_sedang">#9C27B0</color>
+    <color name="ungu_tua">#7B1FA2</color>
+    <color name="merah_muda">#EF9A9A</color>
+    <color name="merah_sedang">#FF5252</color>
+    <color name="merah_tua">#E53935</color>
+    <color name="hitam_muda">#212121</color>
+    <color name="hitam_sedang">#000000</color>
+    <color name="hitam_tua">#000000</color>
+    <color name="putih_muda">#FFFFFF</color>
+    <color name="putih_sedang">#FFFFFF</color>
+    <color name="putih_tua">#FAFAFA</color>
+    <color name="pink_muda">#F48FB1</color>
+    <color name="pink_sedang">#E91E63</color>
+    <color name="pink_tua">#C2185B</color>
+</resources>

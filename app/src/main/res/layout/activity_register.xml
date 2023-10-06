@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/contentView"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Background image full width and height -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/kuning_muda"
+        android:scaleType="centerCrop" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="@dimen/_14sdp"
+                android:paddingLeft="@dimen/_14sdp"
+                android:gravity="bottom">
+                <!-- Card view with white background -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_380sdp"
+                    android:layout_marginTop="50dp"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:background="@drawable/background_rounded"
+                    android:backgroundTint="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Daftar"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:textSize="@dimen/_38sdp"
+                            android:textStyle="bold" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_button_background"
+                                android:backgroundTint="@color/kuning_muda"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:src="@drawable/ic_user"
+                                    android:backgroundTint="@color/kuning_sedang"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/background_rounded"
+                                    android:layout_marginRight="@dimen/_5sdp"/>
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etNama"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Nama Lengkap"
+                                    android:maxLines="1"
+                                    android:inputType="text"
+                                    android:background="@null" />
+
+                            </LinearLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_button_background"
+                                android:backgroundTint="@color/kuning_muda"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:src="@drawable/ic_email"
+                                    android:backgroundTint="@color/kuning_sedang"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/background_rounded"
+                                    android:layout_marginRight="@dimen/_5sdp"/>
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEmail"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Email"
+                                    android:maxLines="1"
+                                    android:inputType="textEmailAddress"
+                                    android:background="@null" />
+
+                            </LinearLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/rounded_button_background"
+                                android:backgroundTint="@color/kuning_muda"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:src="@drawable/ic_key"
+                                    android:layout_gravity="center_vertical"
+                                    android:backgroundTint="@color/kuning_sedang"
+                                    android:background="@drawable/background_rounded"
+                                    android:layout_marginRight="@dimen/_5sdp"/>
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etPassword"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Password"
+                                    android:maxLines="1"
+                                    android:inputType="textPassword"
+                                    android:background="@null" />
+
+                            </LinearLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnRegister"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Daftar"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/_8sdp"
+                            android:backgroundTint="@color/biru_sedang"
+                            android:background="@drawable/rounded_button_background" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnLogin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Masuk"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/rounded_button_background"
+                            android:backgroundTint="@color/biru_muda"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@android:color/white">
+                        <ImageView
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_80sdp"
+                            android:src="@drawable/ic_key"
+                            android:layout_gravity="center" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

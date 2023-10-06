@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coordinator"
+    tools:context="com.vr.superexambro.activity.guru.auth.fragment.AddFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button_background"
+                        android:backgroundTint="@color/kuning_muda"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/ic_edit"
+                            app:tint="@color/white"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@color/kuning_tua"
+                            android:background="@drawable/background_rounded"
+                            android:layout_marginRight="@dimen/_5sdp" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNamaUjian"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/nama_ujian"
+                            android:background="@null" />
+
+                    </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button_background"
+                        android:backgroundTint="@color/kuning_muda"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/ic_mapel"
+                            app:tint="@color/white"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@color/kuning_tua"
+                            android:background="@drawable/background_rounded"
+                            android:layout_marginRight="@dimen/_5sdp" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etMapel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/mata_pelajaran"
+                            android:background="@null" />
+
+                    </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button_background"
+                        android:backgroundTint="@color/kuning_muda"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/ic_kelas"
+                            app:tint="@color/white"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@color/kuning_tua"
+                            android:background="@drawable/background_rounded"
+                            android:layout_marginRight="@dimen/_5sdp" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etKelas"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/kelas"
+                            android:background="@null" />
+
+                    </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button_background"
+                        android:backgroundTint="@color/kuning_muda"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/ic_jam"
+                            app:tint="@color/white"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@color/kuning_tua"
+                            android:background="@drawable/background_rounded"
+                            android:layout_marginRight="@dimen/_5sdp" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDurasi"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/durasi"
+                            android:inputType="number"
+                            android:background="@null" />
+
+                    </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button_background"
+                        android:backgroundTint="@color/kuning_muda"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/ic_web"
+                            app:tint="@color/white"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@color/kuning_tua"
+                            android:background="@drawable/background_rounded"
+                            android:layout_marginRight="@dimen/_5sdp" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etUrl"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Link Ujian / Form"
+                            android:background="@null" />
+
+                    </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!-- Button to add the product -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSimpan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan Perubahan"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:backgroundTint="@color/kuning_tua"
+                    android:background="@drawable/background_rounded" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

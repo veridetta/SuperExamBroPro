@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Super Exam Bro (Pro)</string>
+    <string name="membuka_aplikasi">Membuka Aplikasi</string>
+    <string name="tidak_ada_koneksi_internet">Tidak ada koneksi Internet.</string>
+    <string name="coba_lagi">Coba Lagi</string>
+    <string name="keluar">Keluar</string>
+    <string name="pilih_jenis_pengguna">Pilih Jenis Pengguna :</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nama_ujian">Nama Ujian</string>
+    <string name="mata_pelajaran">Mata Pelajaran</string>
+    <string name="durasi">Durasi (menit)</string>
+    <string name="link_ujian">Link Ujian / Form</string>
+    <string name="kelas">Kelas</string>
+    <string name="google_client_id">934152163510-tqoa6segsb7p7k25n1hlq51aen7inbv0.apps.googleusercontent.com</string>
+</resources>

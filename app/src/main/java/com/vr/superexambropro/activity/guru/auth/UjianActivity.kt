@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +30,7 @@ class UjianActivity : AppCompatActivity() {
     private lateinit var dataAdapter: SiswaUjianAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var shimmer: ShimmerFrameLayout
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var etCari: EditText
     private lateinit var tvSedangMengerjakan: TextView
     private lateinit var tvSelesaiMengerjakan: TextView
@@ -46,6 +48,16 @@ class UjianActivity : AppCompatActivity() {
         Log.d("URL",paketId)
         readDataFirebase(mFirestore, shimmer, "ujian", "where","paketId",paketId, UjianModel::class.java, callback)
         dataListener()
+         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            // Di sini Anda dapat menambahkan logika untuk melakukan refresh data
+            // Misalnya, mengambil data baru dari server
+            // Setelah selesai, hentikan indikator refresh dengan mengatur isRefreshing ke false
+            // Contoh: swipeRefreshLayout.isRefreshing = false
+
+            // Panggil ulang fungsi untuk membaca data dari Firebase atau melakukan operasi refresh lainnya.
+            readDataFirebase(mFirestore, shimmer, "ujian", "where", "paketId", paketId, UjianModel::class.java, callback)
+        }
     }
 
     fun initView(){
@@ -100,6 +112,7 @@ class UjianActivity : AppCompatActivity() {
             }
             tvSedangMengerjakan.text = ": "+sedangMengerjakan.toString()+" Siswa"
             tvSelesaiMengerjakan.text = ": "+selesaiMengerjakan.toString()+" Siswa"
+            swipeRefreshLayout.isRefreshing = false
         }
 
         override fun onError(message: String) {

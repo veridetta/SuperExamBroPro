@@ -70,7 +70,8 @@ class SiswaUjianAdapter(
         val date = convertStringToDate(currentData.waktuMulai!!,"yyyy-MM-dd HH:mm:ss")
         holder.tvTanggal.text = formatDateToIndonesian(date!!)
         //holder.tvTanggal.text = formatDateToIndonesian(convertStringToDate(currentData.waktuMulai.toString(),"dd MMMM yyyy")!!)
-        val remaining = calculateRemainingTime(currentData.waktuMulai!!,currentData.durasi!!.toLong()).toInt()
+        val remaining = calculateRemainingTime(currentData.waktuSelesai!!,currentData.durasi!!.toLong()).toInt()
+        Log.d("REMAINING ", remaining.toString())
         if (remaining <= 0){
             holder.tvTimer.text = "Selesai"
             if (currentData.status == "Sedang Mengerjakan"){

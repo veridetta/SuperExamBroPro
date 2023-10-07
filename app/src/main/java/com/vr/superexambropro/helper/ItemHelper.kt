@@ -109,26 +109,22 @@ fun calculateRemainingTime(workDate: String, durationInMinutes: Long): Long {
         // Hitung selisih waktu antara tanggal pengerjaan dan waktu sekarang dalam milidetik
         val currentTimeMillis = System.currentTimeMillis()
         val workTimeMillis = workDateTime?.time ?: 0
-        var timeDifferenceMillis = currentTimeMillis - workTimeMillis
-
-        // Konversi durasi dalam menit ke milidetik
-        val durationMillis = durationInMinutes * 60 * 1000
-
-        // Jika selisih waktu kurang dari 0, set ke 0
+        var timeDifferenceMillis =  workTimeMillis - currentTimeMillis
+        Log.d("tanggal sekarang ", currentTimeMillis.toString())
+        Log.d("tanggal pengerjaan ", workTimeMillis.toString())
         if (timeDifferenceMillis < 0) {
             timeDifferenceMillis = 0
         }
-
+        Log.d("Sisa menit", (timeDifferenceMillis/60000).toString())
         // Mengembalikan selisih waktu atau 0 jika durasi tidak bersisa
-        return if (timeDifferenceMillis < durationMillis) {
-            durationMillis - timeDifferenceMillis
+        return if (currentTimeMillis < workTimeMillis) {
+            timeDifferenceMillis/6000
         } else {
             0
         }
     } catch (e: Exception) {
         e.printStackTrace()
     }
-
     // Jika terjadi kesalahan, kembalikan 0
     return 0
 }

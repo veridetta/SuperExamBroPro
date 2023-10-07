@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
@@ -47,6 +48,9 @@ class MulaiActivity() : AppCompatActivity() {
     private lateinit var lyKonfirm: RelativeLayout
     private lateinit var lyNotif: RelativeLayout
     private lateinit var etKode: EditText
+    private lateinit var powerManager: PowerManager
+    private lateinit var wakeLock: PowerManager.WakeLock
+    private var wakelockAcquired = false
     var durasi = ""
     var idUjian = ""
     var url =""
@@ -66,6 +70,11 @@ class MulaiActivity() : AppCompatActivity() {
         initWebview()
         initTimer()
         firstTime = savedInstanceState == null
+        powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = powerManager.newWakeLock(
+            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE,
+            "MulaiActivity:WakeLock"
+        )
     }
     private fun initView(){
         btnRefresh = findViewById(R.id.btnRefresh)
@@ -229,25 +238,30 @@ class MulaiActivity() : AppCompatActivity() {
         if (powerButtonReceiver != null) {
             unregisterReceiver(powerButtonReceiver)
         }
+        //normalkan wakelock
+
     }
     override fun onPause() {
         super.onPause()
         // Aplikasi sedang dalam status pause (misalnya, ketika pengguna meminimalkan aplikasi)
         // Tambahkan kode yang harus dijalankan saat aplikasi di-pause di sini
-        if (!firstTime) {
+        if (!isFinishing && !isChangingConfigurations && !firstTime) {
             lyNotif.visibility = View.VISIBLE
             updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
                 idUjian, hashMapOf("status" to "Keluar Aplikasi"))
             { showSnackBar(contentView,"Anda telah keluar dari aplikasi") }
         }
-
     }
-
+    //on destroy
     override fun onResume() {
         super.onResume()
         // Aplikasi sedang dalam status resume (misalnya, ketika pengguna kembali ke aplikasi)
         // Tambahkan kode yang harus dijalankan saat aplikasi di-resume di sini
-        lyNotif.visibility = View.VISIBLE
+        //lyNotif.visibility = View.VISIBLE
+        if (!wakelockAcquired) {
+            wakeLock.acquire((durasi.toLong() + 60) * 1000) // Akuisisi wakelock hanya selama durasi tambah 1 menit
+            wakelockAcquired = true
+        }
     }
 
 

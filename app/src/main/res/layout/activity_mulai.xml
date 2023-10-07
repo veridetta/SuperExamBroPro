@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contentView"
-    tools:context=".activity.siswa.LockScreenActivity">
+    tools:context=".activity.siswa.MulaiActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,7 +13,8 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_30sdp"/>
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_30sdp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

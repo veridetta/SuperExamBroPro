@@ -198,4 +198,5 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+    <include layout="@layout/ly_notif"/>
 </RelativeLayout>

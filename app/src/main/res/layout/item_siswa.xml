@@ -47,15 +47,66 @@
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="4dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sisa waktu : "
+                android:textSize="@dimen/_12sdp"
+                android:drawablePadding="@dimen/_3sdp"
+                android:drawableTint="@color/kuning_tua"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/black"
+                android:drawableStart="@drawable/ic_jam"
+                android:layout_marginTop="3dp" />
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:39:00"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:layout_marginTop="3dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kode Keamanan : "
+                android:textSize="@dimen/_12sdp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/black"
+                android:drawablePadding="@dimen/_3sdp"
+                android:drawableTint="@color/kuning_tua"
+                android:drawableStart="@drawable/ic_key"
+                android:layout_marginTop="3dp" />
+            <TextView
+                android:id="@+id/tvKode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XJKJSS"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:layout_marginTop="3dp" />
+        </LinearLayout>
         <TextView
-            android:id="@+id/tvTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00:39:00"
-            android:textSize="@dimen/_18sdp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
+            android:text="* Kode Keamanan digunakan saat siswa ingin melanjutkan mengerjakan soal"
+            android:textSize="@dimen/_10sdp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:textColor="@color/merah_sedang"
+            android:layout_marginTop="3dp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.vr.superexambropro.R
 import com.vr.superexambropro.activity.guru.auth.EditActivity
 import com.vr.superexambropro.activity.guru.auth.UjianActivity
@@ -84,7 +85,12 @@ class HomeFragment : Fragment() {
         shimmerContainer.startShimmer() // Start shimmer effect
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val result = db.collection("paket").whereEqualTo("userId", uid).get().await()
+                val result = db.collection("paket")
+                    .whereEqualTo("userId", uid)
+                    .orderBy("created_at", Query.Direction.DESCENDING) // Menggunakan orderBy dengan descending order
+                    .get()
+                    .await()
+
                 val datas = mutableListOf<PaketModel>()
                 for (document in result) {
                     val data = document.toObject(PaketModel::class.java)
@@ -95,6 +101,10 @@ class HomeFragment : Fragment() {
                 }
 
                 withContext(Dispatchers.Main) {
+                    // Menghapus data yang ada sebelumnya
+                    dataList.clear()
+                    dataAdapter.filteredDataList.clear()
+
                     dataList.addAll(datas)
                     dataAdapter.filteredDataList.addAll(datas)
                     dataAdapter.notifyDataSetChanged()
@@ -103,11 +113,14 @@ class HomeFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "Error getting documents : $e")
-                shimmerContainer.stopShimmer() // Stop shimmer effect
-                shimmerContainer.visibility = View.GONE // Hide shimmer container
+                withContext(Dispatchers.Main) {
+                    shimmerContainer.stopShimmer() // Stop shimmer effect
+                    shimmerContainer.visibility = View.GONE // Hide shimmer container
+                }
             }
         }
     }
+
 
     private fun editData(data: PaketModel) {
         //intent ke homeActivity fragment add

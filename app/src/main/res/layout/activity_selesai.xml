@@ -31,7 +31,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_380sdp"
                     android:layout_marginTop="50dp"
                     android:padding="@dimen/_8sdp"
                     android:layout_gravity="bottom"
@@ -47,90 +46,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Selamat Datang"
+                            android:text="Selesai"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:textSize="@dimen/_25sdp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Silahkan masukan Nama dan isi kode berikut sebelum mulai mengerjakan."
+                            android:text="Terimakasih telah mengerjakan ujian dengan baik, dan mematuhi aturan dari aplikasi ini."
                             android:layout_marginTop="@dimen/_15sdp"
                             android:textSize="@dimen/_12sdp" />
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_button_background"
-                                android:backgroundTint="@color/kuning_muda"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-                                <ImageView
-                                    android:layout_width="@dimen/_40sdp"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:src="@drawable/ic_user"
-                                    android:backgroundTint="@color/kuning_sedang"
-                                    android:layout_gravity="center_vertical"
-                                    android:background="@drawable/background_rounded"
-                                    android:layout_marginRight="@dimen/_5sdp"/>
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/etNama"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:hint="Nama Lengkap"
-                                    android:maxLines="1"
-                                    android:inputType="text"
-                                    android:background="@null" />
-
-                            </LinearLayout>
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:background="@drawable/rounded_button_background"
-                                android:backgroundTint="@color/kuning_muda"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/_40sdp"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:src="@drawable/ic_key"
-                                    android:layout_gravity="center_vertical"
-                                    android:backgroundTint="@color/kuning_sedang"
-                                    android:background="@drawable/background_rounded"
-                                    android:layout_marginRight="@dimen/_5sdp"/>
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/etKode"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:hint="Link Kode"
-                                    android:maxLines="1"
-                                    android:inputType="text"
-                                    android:background="@null" />
-
-                            </LinearLayout>
-                        </com.google.android.material.textfield.TextInputLayout>
-
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnSubmit"
+                            android:id="@+id/btnHome"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Buka Ujian"
+                            android:text="Halaman Utama"
                             android:textSize="@dimen/_15sdp"
                             android:layout_marginTop="16dp"
                             android:textColor="@color/white"
@@ -138,7 +68,18 @@
                             android:padding="@dimen/_8sdp"
                             android:backgroundTint="@color/biru_sedang"
                             android:background="@drawable/rounded_button_background" />
-
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnTutup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tutup Aplikasi"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/white"
+                            android:maxLines="1"
+                            android:padding="@dimen/_8sdp"
+                            android:backgroundTint="@color/merah_sedang"
+                            android:background="@drawable/rounded_button_background" />
                         <ProgressBar
                             android:id="@+id/progressBar"
                             android:layout_width="wrap_content"

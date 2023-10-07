@@ -209,7 +209,7 @@
                         <ImageView
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_80sdp"
-                            android:src="@drawable/ic_key"
+                            android:src="@drawable/ic_logo"
                             android:layout_gravity="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -1,6 +1,7 @@
 package com.vr.superexambropro.helper
 
 import android.content.Context
+import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.vr.superexambropro.R
+import com.vr.superexambropro.activity.siswa.SelesaiActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -64,7 +66,7 @@ fun startTimer(view:View,waktudalammenit: Int, textView: TextView, documentId: S
         override fun onTick(millisUntilFinished: Long) {
             timeLeftInMillis = millisUntilFinished
             updateCountdownText(textView)
-            if (millisUntilFinished <= 60000) {
+            if (millisUntilFinished.toInt() == 60000) {
                 showSnackBar(view,"Hanya tersisa satu menit lagi. Pastikan kamu sudah menekan tombol selesai di soal agar jawaban tersimpan.")
             }
         }
@@ -156,8 +158,15 @@ fun unlockLockScreen(test_lock:Boolean,context: Context, activity: AppCompatActi
     if (test_lock) {
         val prefs = context.getSharedPreferences("rate_dialog", AppCompatActivity.MODE_PRIVATE)
         val rated = prefs.getBoolean("rate", false)
+        //intent ke selesaiActivity
+        val intent = Intent(context, SelesaiActivity::class.java)
+        //startActivity(intent)
+        activity.startActivity(intent)
         activity.finish()
     } else {
+        val intent = Intent(context, SelesaiActivity::class.java)
+        //startActivity(intent)
+        activity.startActivity(intent)
         activity.finish()
     }
 }

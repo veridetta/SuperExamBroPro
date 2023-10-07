@@ -45,7 +45,7 @@ dependencies {
 
     implementation 'com.androidsx:rate-me:4.0.3'
     implementation 'com.facebook.android:audience-network-sdk:6.4.0'
-    implementation 'com.flurry.android:analytics:14.4.0'
+    //implementation 'com.flurry.android:analytics:14.4.0'
 
     //android sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'

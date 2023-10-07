@@ -85,6 +85,7 @@ class SiswaUjianAdapter(
         }else{
             startTimerSiswa(remaining,holder.tvTimer)
         }
+        holder.tvKode.text = currentData.kodeKeamanan
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -92,6 +93,7 @@ class SiswaUjianAdapter(
         val tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
         val tvTanggal: TextView = itemView.findViewById(R.id.tvTanggal)
         val tvTimer: TextView = itemView.findViewById(R.id.tvTimer)
+        val tvKode: TextView = itemView.findViewById(R.id.tvKode)
 
     }
 }

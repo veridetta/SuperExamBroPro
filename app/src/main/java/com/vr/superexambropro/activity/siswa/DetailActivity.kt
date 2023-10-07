@@ -11,6 +11,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.vr.superexambropro.R
 import com.vr.superexambropro.helper.addMinutesToCurrentDate
+import com.vr.superexambropro.helper.generateRandomString
 import com.vr.superexambropro.helper.getCurrentDate
 import com.vr.superexambropro.helper.showSnackBar
 import com.vr.superexambropro.model.PaketModel
@@ -128,6 +129,7 @@ class DetailActivity : AppCompatActivity() {
             "waktuMulai" to getCurrentDate(),
             "waktuSelesai" to addMinutesToCurrentDate(durasi.toInt()),
             "status" to "Sedang Mengerjakan",
+            "kodeKeamanan" to generateRandomString(6),
             "durasi" to durasi,
             "created_at" to getCurrentDate(),
         )
@@ -142,6 +144,7 @@ class DetailActivity : AppCompatActivity() {
                 myIntent.putExtra("documentId", documentReference.id)
                 myIntent.putExtra("url", url)
                 myIntent.putExtra("durasi", ujianData["durasi"].toString())
+                myIntent.putExtra("kode", ujianData["kodeKeamanan"].toString())
                 startActivity(myIntent)
                 //kemudian kembali normal saat selesai tes
             }

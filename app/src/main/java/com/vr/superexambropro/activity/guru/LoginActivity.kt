@@ -150,6 +150,41 @@ class LoginActivity : AppCompatActivity() {
             // Handle login success and redirection
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
+            //ambil data dari firestore users berdasarkan uid
+            //cek dlu apakah user berhasil login dengan google atau tidak
+            if(auth.currentUser != null){
+                val user = auth.currentUser
+                firestore.collection("users").document(user!!.uid)
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val userRole = documentSnapshot.getString("role")
+
+                        // Save user role to SharedPreferences
+                        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("isLogin", true)
+                        editor.putString("userRole", userRole)
+                        editor.putString("userUid", documentSnapshot.getString("uid"))
+                        editor.putString("userName", documentSnapshot.getString("name"))
+                        editor.putString("userEmail", documentSnapshot.getString("email"))
+                        editor.apply()
+
+                        // Redirect to appropriate activity based on user role
+                        when (userRole) {
+                            "guru" -> startActivity(
+                                Intent(
+                                    this,
+                                    GuruActivity::class.java
+                                )
+                            )
+                        }
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        progressBar.visibility = View.GONE
+                        showSnackBar(contentView,"Failed to get user role.")
+                    }
+            }
         }
     }
     companion object {

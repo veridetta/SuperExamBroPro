@@ -1,5 +1,6 @@
 package com.vr.superexambropro
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
@@ -41,53 +42,51 @@ class SplashActivity : AppCompatActivity() {
         )
         initView()
         checkKoneksi()
+    }
+
+    private fun initView(){
+        progressBar = findViewById(R.id.progressBar)
+        contentView = findViewById(R.id.contentView)
+        lyNokonek = findViewById(R.id.noInternet)
+        //initNoInternetLayout(this, R.id.noInternet)
+    }
+    private fun checkKoneksi(){
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork
+        val networkInfo = connectivityManager.getNetworkInfo(network)
+        isKoneksi = !(networkInfo == null || !networkInfo.isConnected || !networkInfo.isAvailable)
         if (isKoneksi){
             //jika ada koneksi
             lyNokonek.visibility = CoordinatorLayout.GONE
             xprogressBar()
-           // checkLogin()
+            Handler(Looper.getMainLooper()).postDelayed({
+                checkLogin()
+            }, 1000)
         }else{
             //jika tidak ada koneksi
             lyNokonek.visibility = CoordinatorLayout.VISIBLE
             showSnackBar(contentView, "Tidak ada koneksi internet")
         }
     }
-
-    fun initView(){
-        progressBar = findViewById(R.id.progressBar)
-        contentView = findViewById(R.id.contentView)
-        lyNokonek = findViewById(R.id.noInternet)
-        //initNoInternetLayout(this, R.id.noInternet)
-    }
-    fun checkKoneksi(){
-        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork
-        val networkInfo = connectivityManager.getNetworkInfo(network)
-        if (networkInfo == null || !networkInfo.isConnected || !networkInfo.isAvailable) {
-            isKoneksi = false
-        } else {
-            isKoneksi = true
-        }
-    }
-    fun checkLogin(){
+    private fun checkLogin(){
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         editor = sharedPreferences.edit()
         isLogin = sharedPreferences.getBoolean("isLogin", false)
         if (isLogin){
             //jika sudah login
             progressBar.setProgress(100)
-            intent = intent.setClass(this, GuruActivity::class.java)
+            intent = Intent(this, GuruActivity::class.java)
             startActivity(intent)
             finish()
         }else{
             //jika belum login
             progressBar.setProgress(100)
-            intent = intent.setClass(this, RoleActivity::class.java)
+            intent = Intent(this, RoleActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
-    fun xprogressBar() {
+    private fun xprogressBar() {
         //progress bar
         progressBar.setMax(100)
         progressBar.setProgress(0)
@@ -101,10 +100,7 @@ class SplashActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
                 n += 10
-
-
                 runOnUiThread {
-                    checkLogin()
                     progressBar.setProgress(n)
                 }
             }

@@ -16,6 +16,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -24,6 +25,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.vr.superexambropro.R
+import com.vr.superexambropro.helper.generateRandomString
 import com.vr.superexambropro.helper.showSnackBar
 import com.vr.superexambropro.helper.startTimer
 import com.vr.superexambropro.helper.updateFirebase
@@ -32,8 +34,10 @@ import java.util.TimerTask
 
 
 class MulaiActivity() : AppCompatActivity() {
+    var firstTime = true
     lateinit var btnRefresh :ImageButton
     lateinit var btnSelesai : LinearLayout
+    lateinit var btnLanjut : Button
     lateinit var tvTimer  : TextView
     lateinit var contentView  : RelativeLayout
     private lateinit var webView: WebView
@@ -41,9 +45,12 @@ class MulaiActivity() : AppCompatActivity() {
     private lateinit var btnYakin: Button
     private lateinit var btnKembali: Button
     private lateinit var lyKonfirm: RelativeLayout
+    private lateinit var lyNotif: RelativeLayout
+    private lateinit var etKode: EditText
     var durasi = ""
     var idUjian = ""
     var url =""
+    var kode = ""
     private var powerButtonReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +65,7 @@ class MulaiActivity() : AppCompatActivity() {
         initIntent()
         initWebview()
         initTimer()
+        firstTime = savedInstanceState == null
     }
     private fun initView(){
         btnRefresh = findViewById(R.id.btnRefresh)
@@ -68,8 +76,12 @@ class MulaiActivity() : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         btnYakin = findViewById(R.id.btnYakin)
         btnKembali = findViewById(R.id.btnKembali)
+        btnLanjut = findViewById(R.id.btnlanjut)
         lyKonfirm = findViewById(R.id.lyKonfirm)
+        lyNotif = findViewById(R.id.lyDialog)
+        etKode = findViewById(R.id.etKode)
         lyKonfirm.visibility = View.GONE
+        lyNotif.visibility = View.GONE
     }
     private fun initClick(){
         btnRefresh.setOnClickListener {
@@ -88,11 +100,24 @@ class MulaiActivity() : AppCompatActivity() {
                 idUjian, hashMapOf("status" to "Selesai"))
             { showSnackBar(contentView,"Berhasil menyimpan data") }
         }
+        btnLanjut.setOnClickListener {
+            if (etKode.text.toString() == kode){
+                var kodeBaru = generateRandomString(6)
+                kode = kodeBaru
+                updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
+                    idUjian, hashMapOf("status" to "Sedang Mengerjakan","kodeKeamanan" to kode))
+                { showSnackBar(contentView,"Berhasil melanjutkan ujian") }
+                lyNotif.visibility = View.GONE
+            }else{
+                showSnackBar(contentView,"Kode salah, silahkan coba lagi")
+            }
+        }
     }
     private fun initIntent(){
         durasi = intent.getStringExtra("durasi").toString()
         idUjian = intent.getStringExtra("documentId").toString()
         url = intent.getStringExtra("url").toString()
+        kode = intent.getStringExtra("kode").toString()
     }
     private fun initTimer(){
         startTimer(contentView,durasi.toInt(), tvTimer, idUjian,this,false,this)
@@ -205,5 +230,25 @@ class MulaiActivity() : AppCompatActivity() {
             unregisterReceiver(powerButtonReceiver)
         }
     }
+    override fun onPause() {
+        super.onPause()
+        // Aplikasi sedang dalam status pause (misalnya, ketika pengguna meminimalkan aplikasi)
+        // Tambahkan kode yang harus dijalankan saat aplikasi di-pause di sini
+        if (!firstTime) {
+            lyNotif.visibility = View.VISIBLE
+            updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
+                idUjian, hashMapOf("status" to "Keluar Aplikasi"))
+            { showSnackBar(contentView,"Anda telah keluar dari aplikasi") }
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Aplikasi sedang dalam status resume (misalnya, ketika pengguna kembali ke aplikasi)
+        // Tambahkan kode yang harus dijalankan saat aplikasi di-resume di sini
+        lyNotif.visibility = View.VISIBLE
+    }
+
 
 }

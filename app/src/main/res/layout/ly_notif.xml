@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/lyKonfirm"
+    android:id="@+id/lyDialog"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,44 +39,73 @@
                     android:gravity="center"
                     android:padding="16dp">
                     <TextView
+                        android:id="@+id/tvJudul"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Warning"
+                        android:text="Terdeteksi aktifitas yang mencurigakan."
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:textSize="@dimen/_38sdp"
+                        android:textSize="@dimen/_18sdp"
                         android:textStyle="bold" />
                     <TextView
-                        android:id="@+id/textViewOr"
+                        android:id="@+id/tvDes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Pastikan kamu telah menekan tombol selesai pada halaman ujian dan pastikan jawaban sudah tersubmit."
+                        android:text="Aplikasi kami mendeteksi bahwa anda baru-baru ini telah keluar dari aplikasi.\n Silahkan Masukan Kode Keamanan untuk melanjutkan."
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_13sdp"
-                        android:gravity="center_horizontal" />
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnYakin"
+                        android:textSize="@dimen/_13sdp" />
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ya, Saya Sudah Selesai"
+                        android:layout_marginTop="16dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/rounded_button_background"
+                            android:backgroundTint="@color/kuning_muda"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_key"
+                                android:layout_gravity="center_vertical"
+                                android:backgroundTint="@color/kuning_sedang"
+                                android:background="@drawable/background_rounded"
+                                android:layout_marginRight="@dimen/_5sdp"/>
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etKode"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="Kode Keamanan"
+                                android:maxLines="1"
+                                android:inputType="text"
+                                android:background="@null" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="* Kode keamanan diperoleh dari Guru."
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_11sdp" />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnlanjut"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Buka Akses"
                         android:textSize="@dimen/_15sdp"
                         android:layout_marginTop="16dp"
                         android:textColor="@color/white"
                         android:padding="@dimen/_8sdp"
                         android:backgroundTint="@color/biru_sedang"
                         android:background="@drawable/rounded_button_background" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnKembali"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tidak, Kembali ke Ujian"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/rounded_button_background"
-                        android:backgroundTint="@color/biru_muda"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

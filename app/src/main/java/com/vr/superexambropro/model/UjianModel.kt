@@ -10,4 +10,5 @@ class UjianModel {
     var durasi:String? = null
     var status:String? = null //Masa Pengerjaan, Selesai
     var created_at:String? = null
+    var kodeKeamanan:String? = null
 }

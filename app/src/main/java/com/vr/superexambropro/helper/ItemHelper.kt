@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -59,7 +60,8 @@ fun convertStringToDate(dateString: String, formatPattern: String): Date? {
  var timerRunning = false
  var timeLeftInMillis: Long = 0
 fun startTimer(view:View,waktudalammenit: Int, textView: TextView, documentId: String,
-               context: Context,lockStatus:Boolean, activity: AppCompatActivity) {
+               context: Context,lockStatus:Boolean, activity: AppCompatActivity, btnSelesai: Button
+) {
     val totalMillis = waktudalammenit * 60000 // Konversi menit ke milidetik (1 menit = 60000 ms)
     countDownTimer?.cancel()
     countDownTimer = object : CountDownTimer(totalMillis.toLong(), 1000) {
@@ -73,52 +75,59 @@ fun startTimer(view:View,waktudalammenit: Int, textView: TextView, documentId: S
         override fun onFinish() {
             timerRunning = false
             // Timer selesai
-            updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
-                documentId, hashMapOf("status" to "Selesai"))
-            { unlockLockScreen(lockStatus, context, activity) }
+            //trigger click btnselesai
+            btnSelesai.performClick()
         }
     }
     countDownTimer?.start()
     timerRunning = true
 }
 fun startTimerSiswa(waktudalammenit: Int, textView: TextView) {
+    var contdown : CountDownTimer? = null
+    var timerR = false
+    var timeLeft : Long = 0
     val totalMillis = waktudalammenit * 60000 // Konversi menit ke milidetik (1 menit = 60000 ms)
-    countDownTimer?.cancel()
-    countDownTimer = object : CountDownTimer(totalMillis.toLong(), 1000) {
+    contdown?.cancel()
+    contdown = object : CountDownTimer(totalMillis.toLong(), 1000) {
         override fun onTick(millisUntilFinished: Long) {
-            timeLeftInMillis = millisUntilFinished
-            updateCountdownText(textView)
+            timeLeft = millisUntilFinished
+            updateCountdownTextSiswa(textView,timeLeft)
         }
         override fun onFinish() {
-            timerRunning = false
+            timerR = false
             // Timer selesai
             textView.text = "Selesai"
         }
     }
-    countDownTimer?.start()
-    timerRunning = true
+    contdown?.start()
+    timerR = true
+}
+fun updateCountdownTextSiswa(textView: TextView, timeLeftInMillis: Long) {
+    val hours = (timeLeftInMillis / 3600000).toInt()
+    val minutes = ((timeLeftInMillis % 3600000) / 60000).toInt()
+    val seconds = ((timeLeftInMillis % 60000) / 1000).toInt()
+    val timeLeftFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    textView.text = timeLeftFormatted
 }
 fun calculateRemainingTime(workDate: String, durationInMinutes: Long): Long {
     // Format tanggal pengerjaan
     val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-
     try {
         // Parse tanggal pengerjaan ke dalam objek Date
-        val workDateTime = dateFormat.parse(workDate)
-
+        val waktuSelesai = dateFormat.parse(workDate)
         // Hitung selisih waktu antara tanggal pengerjaan dan waktu sekarang dalam milidetik
-        val currentTimeMillis = System.currentTimeMillis()
-        val workTimeMillis = workDateTime?.time ?: 0
-        var timeDifferenceMillis =  workTimeMillis - currentTimeMillis
-        Log.d("tanggal sekarang ", currentTimeMillis.toString())
-        Log.d("tanggal pengerjaan ", workTimeMillis.toString())
-        if (timeDifferenceMillis < 0) {
-            timeDifferenceMillis = 0
+        val waktuSekarangMill = System.currentTimeMillis()
+        val waktuSelesaiMill = waktuSelesai?.time ?: 0
+        var perbedaanMill =  waktuSelesaiMill - waktuSekarangMill
+        Log.d("tanggal sekarang ", waktuSekarangMill.toString())
+        Log.d("tanggal selesai ", waktuSelesaiMill.toString())
+        if (perbedaanMill < 0) {
+            perbedaanMill = 0
         }
-        Log.d("Sisa menit", (timeDifferenceMillis/60000).toString())
+        Log.d("Sisa menit", (perbedaanMill/60000).toString())
         // Mengembalikan selisih waktu atau 0 jika durasi tidak bersisa
-        return if (currentTimeMillis < workTimeMillis) {
-            timeDifferenceMillis/6000
+        return if (perbedaanMill > 60000) {
+            perbedaanMill/60000
         } else {
             0
         }
@@ -132,11 +141,9 @@ fun calculateRemainingTime(workDate: String, durationInMinutes: Long): Long {
     val hours = (timeLeftInMillis / 3600000).toInt()
     val minutes = ((timeLeftInMillis % 3600000) / 60000).toInt()
     val seconds = ((timeLeftInMillis % 60000) / 1000).toInt()
-
     val timeLeftFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds)
     textView.text = timeLeftFormatted
 }
-
 fun updateFirebase(TAG:String, db: FirebaseFirestore, collection: String, document: String, data: HashMap<String, Any>
                    , onComplete: () -> Unit){
     db.collection(collection).document(document)

@@ -50,11 +50,22 @@ class UjianActivity : AppCompatActivity() {
         dataListener()
          swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener {
-            // Di sini Anda dapat menambahkan logika untuk melakukan refresh data
-            // Misalnya, mengambil data baru dari server
-            // Setelah selesai, hentikan indikator refresh dengan mengatur isRefreshing ke false
-            // Contoh: swipeRefreshLayout.isRefreshing = false
-
+            recyclerView = findViewById(R.id.rcData)
+            recyclerView.apply {
+                setHasFixedSize(true)
+                layoutManager = GridLayoutManager(this@UjianActivity, 1)
+                // set the custom adapter to the RecyclerView
+                dataAdapter = SiswaUjianAdapter(
+                    dataList,
+                    this@UjianActivity
+                )
+            }
+            recyclerView.adapter = dataAdapter
+            dataAdapter.filter("")
+            //bersihkan dataList
+            dataList.clear()
+            dataAdapter.notifyDataSetChanged()
+            dataAdapter.filteredDataList.clear()
             // Panggil ulang fungsi untuk membaca data dari Firebase atau melakukan operasi refresh lainnya.
             readDataFirebase(mFirestore, shimmer, "ujian", "where", "paketId", paketId, UjianModel::class.java, callback)
         }
@@ -96,6 +107,8 @@ class UjianActivity : AppCompatActivity() {
 
     val callback = object : DataCallback<UjianModel> {
         override fun onDataLoaded(datas: List<UjianModel>) {
+            //clear data dahulu
+            dataList.clear()
             // Misalnya, tambahkan datas ke adapter, dan sebagainya
             dataList.addAll(datas)
             dataAdapter.filteredDataList.addAll(datas)

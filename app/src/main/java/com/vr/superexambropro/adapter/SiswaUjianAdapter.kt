@@ -1,5 +1,6 @@
 package com.vr.superexambropro.adapter
 import android.content.Context
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,11 @@ import com.vr.superexambropro.helper.calculateRemainingTime
 import com.vr.superexambropro.helper.convertStringToDate
 import com.vr.superexambropro.helper.formatDateToIndonesian
 import com.vr.superexambropro.helper.startTimerSiswa
+import com.vr.superexambropro.helper.updateCountdownTextSiswa
 import com.vr.superexambropro.helper.updateFirebase
 import com.vr.superexambropro.model.PaketModel
 import com.vr.superexambropro.model.UjianModel
+import java.text.SimpleDateFormat
 import java.util.Locale
 
 
@@ -84,7 +87,44 @@ class SiswaUjianAdapter(
                 }
             }
         }else{
-            startTimerSiswa(remaining,holder.tvTimer)
+            //startTimerSiswa(remaining,holder.tvTimer)
+            var timeLeft : Long = 0
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            try {
+                // Parse tanggal pengerjaan ke dalam objek Date
+                val waktuSelesai = dateFormat.parse(currentData.waktuSelesai!!)
+                // Hitung selisih waktu antara tanggal pengerjaan dan waktu sekarang dalam milidetik
+                val waktuSekarangMill = System.currentTimeMillis()
+                val waktuSelesaiMill = waktuSelesai?.time ?: 0
+                 timeLeft =  waktuSelesaiMill - waktuSekarangMill
+                if (timeLeft < 0) {
+                    timeLeft = 0
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            var contdown : CountDownTimer? = null
+            var timerR = false
+            contdown?.cancel()
+            contdown = object : CountDownTimer(timeLeft, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    holder.tvTimer.text = ""
+                    var timeLeftx = millisUntilFinished
+                    //updateCountdownTextSiswa(holder.tvTimer,timeLeft)
+                    val hours = (timeLeftx / 3600000).toInt()
+                    val minutes = ((timeLeftx % 3600000) / 60000).toInt()
+                    val seconds = ((timeLeftx % 60000) / 1000).toInt()
+                    val timeLeftFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+                    holder.tvTimer.text = timeLeftFormatted
+                }
+                override fun onFinish() {
+                    timerR = false
+                    // Timer selesai
+                    holder.tvTimer.text = "Selesai"
+                }
+            }
+            contdown?.start()
+            timerR = true
         }
         holder.tvKode.text = currentData.kodeKeamanan
     }

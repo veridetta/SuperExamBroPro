@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
@@ -13,9 +14,6 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -29,19 +27,21 @@ import com.vr.superexambropro.R
 import com.vr.superexambropro.helper.generateRandomString
 import com.vr.superexambropro.helper.showSnackBar
 import com.vr.superexambropro.helper.startTimer
+import com.vr.superexambropro.helper.unlockLockScreen
 import com.vr.superexambropro.helper.updateFirebase
+import im.delight.android.webview.AdvancedWebView
 import java.util.Timer
 import java.util.TimerTask
 
 
-class MulaiActivity() : AppCompatActivity() {
+class MulaiActivity() : AppCompatActivity(),AdvancedWebView.Listener  {
     var firstTime = true
     lateinit var btnRefresh :ImageButton
     lateinit var btnSelesai : LinearLayout
     lateinit var btnLanjut : Button
     lateinit var tvTimer  : TextView
     lateinit var contentView  : RelativeLayout
-    private lateinit var webView: WebView
+    private lateinit var webView: AdvancedWebView
     private lateinit var progressBar: ProgressBar
     private lateinit var btnYakin: Button
     private lateinit var btnKembali: Button
@@ -52,6 +52,7 @@ class MulaiActivity() : AppCompatActivity() {
     private lateinit var wakeLock: PowerManager.WakeLock
     private var wakelockAcquired = false
     var durasi = ""
+    var isSelesai  = false
     var idUjian = ""
     var url =""
     var kode = ""
@@ -69,7 +70,11 @@ class MulaiActivity() : AppCompatActivity() {
         initIntent()
         initWebview()
         initTimer()
-        firstTime = savedInstanceState == null
+        //handler untuk delay 3 detik ganti firttime ke false
+        val handler = android.os.Handler()
+        handler.postDelayed({
+            firstTime = false
+        }, 3000)
         powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(
             PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE,
@@ -81,7 +86,7 @@ class MulaiActivity() : AppCompatActivity() {
         btnSelesai = findViewById(R.id.btnSelesai)
         tvTimer = findViewById(R.id.tvTimer)
         contentView = findViewById(R.id.contentView)
-        webView = findViewById(R.id.webView)
+        webView = findViewById(R.id.webview)
         progressBar = findViewById(R.id.progressBar)
         btnYakin = findViewById(R.id.btnYakin)
         btnKembali = findViewById(R.id.btnKembali)
@@ -105,9 +110,13 @@ class MulaiActivity() : AppCompatActivity() {
             lyKonfirm.visibility = View.GONE
         }
         btnYakin.setOnClickListener {
+            isSelesai = true
             updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
                 idUjian, hashMapOf("status" to "Selesai"))
-            { showSnackBar(contentView,"Berhasil menyimpan data") }
+            {
+                showSnackBar(contentView,"Berhasil menyimpan data")
+                unlockLockScreen(true,this,this@MulaiActivity)
+            }
         }
         btnLanjut.setOnClickListener {
             if (etKode.text.toString() == kode){
@@ -129,36 +138,28 @@ class MulaiActivity() : AppCompatActivity() {
         kode = intent.getStringExtra("kode").toString()
     }
     private fun initTimer(){
-        startTimer(contentView,durasi.toInt(), tvTimer, idUjian,this,false,this)
+        startTimer(contentView,durasi.toInt(), tvTimer, idUjian,
+            this,false,this,btnYakin)
     }
     fun initWebview() {
         /// Konfigurasi WebView
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(false);
+        webView.setListener(this,this)
+        webView.getSettings().setJavaScriptEnabled(true)
+        webView.getSettings().setUseWideViewPort(false)
+        webView.getSettings().setLoadWithOverviewMode(true)
+        webView.getSettings().setSupportZoom(true)
+        webView.getSettings().setBuiltInZoomControls(false)
+        webView.getSettings().setDisplayZoomControls(false)
+        //cache mode no cache
+        webView.getSettings().setCacheMode(android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webView.clearCache(true)
+        webView.clearHistory()
         //check url ada https atau http tidak di depannya
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             url = "https://$url"
         }
         loadWebPage(url)
         Log.d("TAG", "initWebview: $url")
-        // Mengaktifkan WebViewClient
-        webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                progressBar.visibility = View.GONE
-                btnRefresh.isEnabled = true
-            }
-        }
-
-        // Mengaktifkan WebChromeClient untuk loading bar
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                progressBar.progress = newProgress
-            }
-        }
     }
     fun initPower(){
         // Daftarkan penerima untuk mengawasi tombol daya
@@ -205,7 +206,11 @@ class MulaiActivity() : AppCompatActivity() {
         }
         timer.scheduleAtFixedRate(task, 1, 2)
     }
-    override fun onBackPressed() {}
+    override fun onBackPressed() {
+        if (!webView.onBackPressed()) {
+            return
+        }
+    }
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         return false
     }
@@ -232,8 +237,8 @@ class MulaiActivity() : AppCompatActivity() {
         } else super.onKeyDown(keyCode, event)
     }
     override fun onDestroy() {
+        webView.onDestroy()
         super.onDestroy()
-
         // Hapus penerima saat aktivitas dihancurkan
         if (powerButtonReceiver != null) {
             unregisterReceiver(powerButtonReceiver)
@@ -241,28 +246,67 @@ class MulaiActivity() : AppCompatActivity() {
         //normalkan wakelock
 
     }
+
     override fun onPause() {
+        webView.onPause();
         super.onPause()
         // Aplikasi sedang dalam status pause (misalnya, ketika pengguna meminimalkan aplikasi)
         // Tambahkan kode yang harus dijalankan saat aplikasi di-pause di sini
-        if (!isFinishing && !isChangingConfigurations && !firstTime) {
-            lyNotif.visibility = View.VISIBLE
-            updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
-                idUjian, hashMapOf("status" to "Keluar Aplikasi"))
-            { showSnackBar(contentView,"Anda telah keluar dari aplikasi") }
+        if(!isSelesai){
+            if (!firstTime) {
+                lyNotif.visibility = View.VISIBLE
+                updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
+                    idUjian, hashMapOf("status" to "Keluar Aplikasi"))
+                { showSnackBar(contentView,"Anda telah keluar dari aplikasi") }
+            }
         }
     }
     //on destroy
     override fun onResume() {
         super.onResume()
+        webView.onResume();
         // Aplikasi sedang dalam status resume (misalnya, ketika pengguna kembali ke aplikasi)
         // Tambahkan kode yang harus dijalankan saat aplikasi di-resume di sini
-        //lyNotif.visibility = View.VISIBLE
-        if (!wakelockAcquired) {
-            wakeLock.acquire((durasi.toLong() + 60) * 1000) // Akuisisi wakelock hanya selama durasi tambah 1 menit
-            wakelockAcquired = true
+        if(!isSelesai){
+            if (!firstTime) {
+                lyNotif.visibility = View.VISIBLE
+                updateFirebase("DetailActivity", FirebaseFirestore.getInstance(), "ujian",
+                    idUjian, hashMapOf("status" to "Keluar Aplikasi"))
+                { showSnackBar(contentView,"Anda telah keluar dari aplikasi") }
+            }
+            if (!wakelockAcquired) {
+                wakeLock.acquire((durasi.toLong() + 60) * 1000) // Akuisisi wakelock hanya selama durasi tambah 1 menit
+                wakelockAcquired = true
+            }
         }
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        webView.onActivityResult(requestCode, resultCode, intent)
+        // ...
     }
 
+    override fun onPageStarted(url: String?, favicon: Bitmap?) {
+        //progressbar
+        progressBar.visibility = View.VISIBLE
+    }
 
+    override fun onPageFinished(url: String?) {
+        progressBar.visibility = View.GONE
+    }
+
+    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {}
+
+    override fun onDownloadRequested(
+        url: String?,
+        suggestedFilename: String?,
+        mimeType: String?,
+        contentLength: Long,
+        contentDisposition: String?,
+        userAgent: String?
+    ) {
+    }
+
+    override fun onExternalPageRequest(url: String?) {}
 }

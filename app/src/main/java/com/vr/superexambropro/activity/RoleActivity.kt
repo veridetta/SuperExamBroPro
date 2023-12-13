@@ -12,6 +12,8 @@ import android.view.WindowManager
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar
+import com.google.android.material.textfield.TextInputLayout
+import com.vr.superexambropro.AboutActivity
 import com.vr.superexambropro.R
 import com.vr.superexambropro.activity.guru.LoginActivity
 import com.vr.superexambropro.activity.guru.auth.GuruActivity
@@ -23,6 +25,7 @@ class RoleActivity : AppCompatActivity() {
     //init elemen
     lateinit var cardSiswa : CardView
     lateinit var cardGuru : CardView
+    lateinit var btnAbout : TextInputLayout
     var isKoneksi: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,7 @@ class RoleActivity : AppCompatActivity() {
         cardGuru = findViewById(R.id.card_guru)
         initNoInternetLayout(this, R.id.noInternet)
         isKoneksi = isInternetAvailable(this, R.id.noInternet)
+        btnAbout = findViewById(R.id.btnAbout)
 
     }
     private fun elementClick(){
@@ -49,6 +53,11 @@ class RoleActivity : AppCompatActivity() {
             //pindah ke activity guru
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+        btnAbout.setEndIconOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }

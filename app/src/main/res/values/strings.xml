@@ -13,4 +13,6 @@
     <string name="kelas">Kelas</string>
     <string name="google_client_id">934152163510-tqoa6segsb7p7k25n1hlq51aen7inbv0.apps.googleusercontent.com</string>
     <string name="flurry_api">BT5S7RM2Y5HNTCG5XNM7</string>
+    <string name="app_version">v1.0.5</string>
+    <string name="developer">Developed by : <font color='#FF0000'>CrbDev</font></string>
 </resources>

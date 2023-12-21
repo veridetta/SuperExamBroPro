@@ -20,6 +20,7 @@ class UjianAdapter(
     private var dataList: MutableList<PaketModel>,
     val context: Context,
     private val onEditClickListener: (PaketModel) -> Unit,
+    private val onHapusClickListener: (PaketModel) -> Unit,
     private val onCardClickListener: (PaketModel) -> Unit
 ) : RecyclerView.Adapter<UjianAdapter.DataViewHolder>() {
     public var filteredDataList: MutableList<PaketModel> = mutableListOf()
@@ -73,6 +74,7 @@ class UjianAdapter(
         holder.tvKelas.text = currentData.kelas
 
         holder.btnUbah.setOnClickListener { onEditClickListener(currentData) }
+        holder.btnHapus.setOnClickListener { onHapusClickListener(currentData) }
         holder.cardview.setOnClickListener { onCardClickListener(currentData) }
     }
 
@@ -83,7 +85,8 @@ class UjianAdapter(
         val tvTanggal: TextView = itemView.findViewById(R.id.tvTanggal)
         val tvDurasi: TextView = itemView.findViewById(R.id.tvDurasi)
         val tvKelas: TextView = itemView.findViewById(R.id.tvKelas)
-        val btnUbah: LinearLayout = itemView.findViewById(R.id.btnUbah)
+        val btnUbah: ImageView = itemView.findViewById(R.id.btnUbah)
+        val btnHapus: ImageView = itemView.findViewById(R.id.btnHapus)
         val cardview: CardView = itemView.findViewById(R.id.cardView)
     }
 }

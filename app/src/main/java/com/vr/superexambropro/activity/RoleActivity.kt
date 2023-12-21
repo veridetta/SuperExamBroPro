@@ -1,6 +1,8 @@
 package com.vr.superexambropro.activity
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -10,6 +12,7 @@ import android.provider.Settings
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar
 import com.google.android.material.textfield.TextInputLayout
@@ -25,7 +28,8 @@ class RoleActivity : AppCompatActivity() {
     //init elemen
     lateinit var cardSiswa : CardView
     lateinit var cardGuru : CardView
-    lateinit var btnAbout : TextInputLayout
+    lateinit var btnAbout : LinearLayout
+    lateinit var btnExit : LinearLayout
     var isKoneksi: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +45,7 @@ class RoleActivity : AppCompatActivity() {
         initNoInternetLayout(this, R.id.noInternet)
         isKoneksi = isInternetAvailable(this, R.id.noInternet)
         btnAbout = findViewById(R.id.btnAbout)
+        btnExit = findViewById(R.id.btnExit)
 
     }
     private fun elementClick(){
@@ -51,13 +56,38 @@ class RoleActivity : AppCompatActivity() {
         }
         cardGuru.setOnClickListener {
             //pindah ke activity guru
-            intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            //cek sudah login belum
+            val sharedPreferences: SharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+            val isLogin = sharedPreferences.getBoolean("isLogin", false)
+            if (isLogin){
+                //jika sudah login
+                intent = Intent(this, GuruActivity::class.java)
+                startActivity(intent)
+            }else{
+                //jika belum login
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
-        btnAbout.setEndIconOnClickListener {
+        btnAbout.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
+        }
+        btnExit.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Konfirmasi")
+            builder.setMessage("Apakah Anda yakin ingin keluar?")
+            builder.setPositiveButton("Ya") { dialogInterface: DialogInterface, i: Int ->
+                // Jika pengguna memilih "Ya", keluar dari aplikasi
+                finishAffinity()
+            }
+            builder.setNegativeButton("Tidak") { dialogInterface: DialogInterface, i: Int ->
+                // Jika pengguna memilih "Tidak", tutup dialog
+                dialogInterface.dismiss()
+            }
 
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 }

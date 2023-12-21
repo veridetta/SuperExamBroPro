@@ -106,35 +106,26 @@
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:layout_weight="2">
-                <LinearLayout
+                <ImageView
                     android:id="@+id/btnUbah"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_button_background"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/_13sdp"
-                    android:backgroundTint="@color/kuning_sedang"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_26sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        android:src="@drawable/ic_edit"
-                        app:tint="@color/white"
-                        android:backgroundTint="@color/merah_tua"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/background_rounded"
-                        android:layout_marginRight="@dimen/_5sdp"/>
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etUbah"
-                        android:enabled="false"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:textSize="@dimen/_10sdp"
-                        android:hint="Ubah"
-                        android:background="@null" />
-                </LinearLayout>
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/white"
+                    android:backgroundTint="@color/hijau_sedang"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/background_rounded" />
+                <ImageView
+                    android:id="@+id/btnHapus"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/white"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:backgroundTint="@color/merah_tua"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/background_rounded"
+                    android:layout_marginRight="@dimen/_5sdp"/>
             </LinearLayout>
         </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.vr.superexambropro.activity.guru.auth.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -58,6 +60,7 @@ class HomeFragment : Fragment() {
                 dataList,
                 requireContext(),
                 { data -> editData(data) },
+                { data -> hapusData(data) },
                 { data -> cardClick(data) }
             )
         }
@@ -136,6 +139,33 @@ class HomeFragment : Fragment() {
         intent.putExtra("key", data.key)
         intent.putExtra("durasi", data.durasi)
         startActivity(intent)
+    }
+    private fun hapusData(data: PaketModel) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Konfirmasi")
+        builder.setMessage("Apakah Anda yakin ingin menghapus data ini?")
+        builder.setPositiveButton("Ya") { dialogInterface: DialogInterface, i: Int ->
+            // Jika pengguna memilih "Ya", keluar dari aplikasi
+            //hapus data dari firestore
+            mFirestore.collection("paket").document(data.documentId!!).delete()
+                .addOnSuccessListener {
+                    Log.d("Hapus", "Data successfully deleted!")
+                }
+                .addOnFailureListener { e -> Log.w("Hapus", "Error deleting document", e) }
+            //remove data dari adapter
+            dataList.remove(data)
+            dataAdapter.notifyDataSetChanged()
+        }
+        builder.setNegativeButton("Tidak") { dialogInterface: DialogInterface, i: Int ->
+            // Jika pengguna memilih "Tidak", tutup dialog
+            dialogInterface.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+
+
+
     }
     private fun cardClick(data: PaketModel) {
         //intent ke homeActivity fragment add

@@ -1,4 +1,4 @@
-package com.vr.superexambropro.activity.guru.auth.fragment
+package com.vr.superexambropro.activity.guru.auth.fragment.home
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -22,7 +22,10 @@ import com.google.firebase.firestore.Query
 import com.vr.superexambropro.R
 import com.vr.superexambropro.activity.guru.auth.EditActivity
 import com.vr.superexambropro.activity.guru.auth.UjianActivity
+import com.vr.superexambropro.activity.guru.login.LoginVM
 import com.vr.superexambropro.adapter.UjianAdapter
+import com.vr.superexambropro.databinding.ActivityLoginBinding
+import com.vr.superexambropro.databinding.FragmentHomeBinding
 import com.vr.superexambropro.model.PaketModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -30,12 +33,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class HomeFragment : Fragment() {
+    private lateinit var vm: HomeVM
+    private lateinit var binding: FragmentHomeBinding
 
     private val mFirestore = FirebaseFirestore.getInstance()
     private lateinit var dataAdapter: UjianAdapter
@@ -47,10 +47,12 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater)
+        return binding.root
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+        vm = ViewModelProvider(this)[HomeVM  ::class.java]
         recyclerView = itemView.findViewById(R.id.rcData)
         recyclerView.apply {
             setHasFixedSize(true)

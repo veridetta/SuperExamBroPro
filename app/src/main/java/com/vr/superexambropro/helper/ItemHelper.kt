@@ -23,6 +23,11 @@ fun showSnackBar(view: View, message: String){
     //val rootView = findViewById<View>(android.R.id.content)
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 }
+fun showSnackbarContext(context: Context, message: String) {
+    val activity = context as AppCompatActivity
+    val view = activity.findViewById<View>(android.R.id.content)
+    Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+}
 fun generateRandomString(length: Int): String {
     val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     return (1..length)

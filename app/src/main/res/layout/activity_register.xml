@@ -208,4 +208,7 @@
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+    <include
+        android:id="@+id/cc_loading"
+        layout="@layout/ly_loading"/>
 </RelativeLayout>

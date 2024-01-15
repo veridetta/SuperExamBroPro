@@ -9,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vr.superexambropro.R
 import com.vr.superexambropro.activity.RoleActivity
 import com.vr.superexambropro.activity.guru.auth.fragment.AddFragment
-import com.vr.superexambropro.activity.guru.auth.fragment.HomeFragment
+import com.vr.superexambropro.activity.guru.auth.fragment.home.HomeFragment
 
 class GuruActivity : AppCompatActivity() {
     private lateinit var fragmentContainer: FrameLayout

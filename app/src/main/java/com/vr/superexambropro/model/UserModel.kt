@@ -7,4 +7,5 @@ class UserModel {
     var email:String? = null
     var role:String? = null
     var created_at:String? = null
+    var isLogin:Boolean = false
 }

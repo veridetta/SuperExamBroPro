@@ -51,10 +51,10 @@
             android:name=".activity.guru.auth.EditActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.guru.RegisterActivity"
+            android:name=".activity.guru.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.guru.LoginActivity"
+            android:name=".activity.guru.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".activity.RoleActivity"

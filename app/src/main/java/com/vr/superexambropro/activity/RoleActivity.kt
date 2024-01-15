@@ -1,24 +1,16 @@
 package com.vr.superexambropro.activity
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
-import android.util.DisplayMetrics
-import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
-import com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar
-import com.google.android.material.textfield.TextInputLayout
 import com.vr.superexambropro.AboutActivity
 import com.vr.superexambropro.R
-import com.vr.superexambropro.activity.guru.LoginActivity
+import com.vr.superexambropro.activity.guru.login.LoginActivity
 import com.vr.superexambropro.activity.guru.auth.GuruActivity
 import com.vr.superexambropro.activity.siswa.SiswaActivity
 import com.vr.superexambropro.helper.initNoInternetLayout

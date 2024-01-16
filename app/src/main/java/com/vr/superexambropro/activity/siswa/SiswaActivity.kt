@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import com.vr.superexambropro.R
+import com.vr.superexambropro.activity.siswa.detail.DetailActivity
 
 class SiswaActivity : AppCompatActivity() {
     lateinit var btnSubmit : Button

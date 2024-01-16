@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/coordinator"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.guru.auth.UjianActivity">
+    tools:context=".activity.guru.auth.ujian.UjianActivity">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -127,7 +128,9 @@
 
 
                 </LinearLayout>
-                <include layout="@layout/shimmer_item_ujian"/>
+                <include
+                    android:id="@+id/shimmerLayout"
+                    layout="@layout/shimmer_item_ujian"/>
                 <!-- RecyclerView for list of products -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcData"
@@ -137,4 +140,7 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <include
+        android:id="@+id/cc_loading"
+        layout="@layout/ly_loading"/>
+</RelativeLayout>

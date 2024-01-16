@@ -216,5 +216,7 @@
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
-    <include layout="@layout/load_data" />
+    <include
+        android:id="@+id/cc_loading"
+        layout="@layout/ly_loading"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

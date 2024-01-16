@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,29 +14,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.vr.superexambropro.R
-import com.vr.superexambropro.activity.guru.auth.EditActivity
-import com.vr.superexambropro.activity.guru.auth.UjianActivity
-import com.vr.superexambropro.activity.guru.login.LoginVM
+import com.vr.superexambropro.activity.guru.auth.edit.EditActivity
+import com.vr.superexambropro.activity.guru.auth.ujian.UjianActivity
 import com.vr.superexambropro.adapter.UjianAdapter
-import com.vr.superexambropro.databinding.ActivityLoginBinding
 import com.vr.superexambropro.databinding.FragmentHomeBinding
+import com.vr.superexambropro.helper.showSnackbarContext
 import com.vr.superexambropro.model.PaketModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     private lateinit var vm: HomeVM
     private lateinit var binding: FragmentHomeBinding
 
     private val mFirestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
     private lateinit var dataAdapter: UjianAdapter
     private lateinit var recyclerView: RecyclerView
     val TAG = "LOAD DATA"
@@ -53,25 +45,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         vm = ViewModelProvider(this)[HomeVM  ::class.java]
-        recyclerView = itemView.findViewById(R.id.rcData)
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = GridLayoutManager(activity, 1)
-            // set the custom adapter to the RecyclerView
-            dataAdapter = UjianAdapter(
-                dataList,
-                requireContext(),
-                { data -> editData(data) },
-                { data -> hapusData(data) },
-                { data -> cardClick(data) }
-            )
-        }
-        val shimmerContainer = itemView.findViewById<ShimmerFrameLayout>(R.id.shimmerContainer)
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
-        uid?.let { readData(mFirestore,shimmerContainer, it) }
+        isLoading()
+        initRC()
+        observe()
 
         recyclerView.adapter = dataAdapter
-
         val searchEditText = itemView.findViewById<EditText>(R.id.btnCari)
         dataAdapter.filter("")
         searchEditText.addTextChangedListener(object : TextWatcher {
@@ -86,46 +64,40 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun readData(db: FirebaseFirestore, shimmerContainer: ShimmerFrameLayout, uid: String) {
-        shimmerContainer.startShimmer() // Start shimmer effect
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val result = db.collection("paket")
-                    .whereEqualTo("userId", uid)
-                    .orderBy("created_at", Query.Direction.DESCENDING) // Menggunakan orderBy dengan descending order
-                    .get()
-                    .await()
-
-                val datas = mutableListOf<PaketModel>()
-                for (document in result) {
-                    val data = document.toObject(PaketModel::class.java)
-                    val docId = document.id
-                    data.documentId = docId
-                    datas.add(data)
-                    Log.d(TAG, "Datanya : ${document.id} => ${document.data}")
-                }
-
-                withContext(Dispatchers.Main) {
-                    // Menghapus data yang ada sebelumnya
-                    dataList.clear()
-                    dataAdapter.filteredDataList.clear()
-
-                    dataList.addAll(datas)
-                    dataAdapter.filteredDataList.addAll(datas)
-                    dataAdapter.notifyDataSetChanged()
-                    shimmerContainer.stopShimmer() // Stop shimmer effect
-                    shimmerContainer.visibility = View.GONE // Hide shimmer container
-                }
-            } catch (e: Exception) {
-                Log.w(TAG, "Error getting documents : $e")
-                withContext(Dispatchers.Main) {
-                    shimmerContainer.stopShimmer() // Stop shimmer effect
-                    shimmerContainer.visibility = View.GONE // Hide shimmer container
-                }
-            }
+    private fun initRC(){
+        binding.rcData.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(activity, 1)
+            // set the custom adapter to the RecyclerView
+            dataAdapter = UjianAdapter(
+                dataList,
+                requireContext(),
+                { data -> editData(data) },
+                { data -> hapusData(data) },
+                { data -> cardClick(data) }
+            )
         }
     }
-
+    private fun observe(){
+        vm.uid.observe(viewLifecycleOwner){
+            if(it!==""){
+                vm.getData(mFirestore,requireContext())
+            }
+        }
+        vm.data.observe(viewLifecycleOwner){
+            binding.include.shimmerContainer.startShimmer() // Start shimmer effect
+            if(it.size>0){
+                dataList.clear()
+                dataAdapter.filteredDataList.clear()
+                dataList.addAll(it)
+                dataAdapter.filteredDataList.addAll(it)
+                dataAdapter.notifyDataSetChanged()
+                binding.include.shimmerContainer.stopShimmer() // Stop shimmer effect
+                binding.include.shimmerContainer.visibility = View.GONE // Hide shimmer container
+            }
+        }
+        vm.getUid(auth)
+    }
 
     private fun editData(data: PaketModel) {
         //intent ke homeActivity fragment add
@@ -147,25 +119,21 @@ class HomeFragment : Fragment() {
         builder.setTitle("Konfirmasi")
         builder.setMessage("Apakah Anda yakin ingin menghapus data ini?")
         builder.setPositiveButton("Ya") { dialogInterface: DialogInterface, i: Int ->
-            // Jika pengguna memilih "Ya", keluar dari aplikasi
-            //hapus data dari firestore
-            mFirestore.collection("paket").document(data.documentId!!).delete()
-                .addOnSuccessListener {
-                    Log.d("Hapus", "Data successfully deleted!")
+            vm.hapusDone.observe(viewLifecycleOwner){
+                if(it){
+                    dataList.remove(data)
+                    dataAdapter.notifyDataSetChanged()
+                    showSnackbarContext(requireContext(),"Berhasil dihapus")
                 }
-                .addOnFailureListener { e -> Log.w("Hapus", "Error deleting document", e) }
-            //remove data dari adapter
-            dataList.remove(data)
-            dataAdapter.notifyDataSetChanged()
+            }
+            vm.doHapus(mFirestore,requireContext(),data.documentId.toString())
         }
         builder.setNegativeButton("Tidak") { dialogInterface: DialogInterface, i: Int ->
-            // Jika pengguna memilih "Tidak", tutup dialog
             dialogInterface.dismiss()
         }
 
         val dialog = builder.create()
         dialog.show()
-
 
 
     }
@@ -184,5 +152,14 @@ class HomeFragment : Fragment() {
         intent.putExtra("durasi", data.durasi)
         startActivity(intent)
     }
+    fun isLoading(){
+        vm.isLoading.observe(viewLifecycleOwner) {
+            if (it){
 
+                binding.ccLoading.contentLoading.visibility=View.VISIBLE
+            }else{
+                binding.ccLoading.contentLoading.visibility = View.GONE
+            }
+        }
+    }
 }

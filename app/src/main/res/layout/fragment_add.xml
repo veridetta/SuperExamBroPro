@@ -201,5 +201,8 @@
                     android:background="@drawable/background_rounded" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        <include
+            android:id="@+id/cc_loading"
+            layout="@layout/ly_loading"/>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

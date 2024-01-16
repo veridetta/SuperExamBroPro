@@ -39,16 +39,16 @@
             android:name=".activity.siswa.MulaiActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.siswa.DetailActivity"
+            android:name=".activity.siswa.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.guru.auth.UjianActivity"
+            android:name=".activity.guru.auth.ujian.UjianActivity"
             android:exported="false" />
         <activity
             android:name=".activity.guru.auth.GuruActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.guru.auth.EditActivity"
+            android:name=".activity.guru.auth.edit.EditActivity"
             android:exported="false" />
         <activity
             android:name=".activity.guru.register.RegisterActivity"

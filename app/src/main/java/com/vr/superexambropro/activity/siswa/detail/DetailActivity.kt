@@ -3,29 +3,15 @@ package com.vr.superexambropro.activity.siswa.detail
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.vr.superexambropro.R
-import com.vr.superexambropro.activity.guru.auth.ujian.UjianVM
-import com.vr.superexambropro.activity.siswa.MulaiActivity
+import com.vr.superexambropro.activity.siswa.mulai.MulaiActivity
 import com.vr.superexambropro.databinding.ActivityDetailBinding
-import com.vr.superexambropro.databinding.ActivityUjianBinding
 import com.vr.superexambropro.helper.addMinutesToCurrentDate
 import com.vr.superexambropro.helper.generateRandomString
 import com.vr.superexambropro.helper.getCurrentDate
-import com.vr.superexambropro.helper.showSnackBar
-import com.vr.superexambropro.model.PaketModel
 import com.vr.superexambropro.model.UjianModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import java.util.UUID
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var vm: DetailVM

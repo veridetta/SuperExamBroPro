@@ -36,7 +36,7 @@
             android:name=".activity.siswa.SiswaActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.siswa.MulaiActivity"
+            android:name=".activity.siswa.mulai.MulaiActivity"
             android:exported="false" />
         <activity
             android:name=".activity.siswa.detail.DetailActivity"

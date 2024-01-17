@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contentView"
-    tools:context=".activity.siswa.MulaiActivity">
+    tools:context=".activity.siswa.mulai.MulaiActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -199,5 +199,7 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
-    <include layout="@layout/ly_notif"/>
+    <include
+        android:id="@+id/ly_notif"
+        layout="@layout/ly_notif"/>
 </RelativeLayout>

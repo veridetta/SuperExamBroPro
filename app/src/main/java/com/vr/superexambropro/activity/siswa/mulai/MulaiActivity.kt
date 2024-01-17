@@ -1,4 +1,4 @@
-package com.vr.superexambropro.activity.siswa
+package com.vr.superexambropro.activity.siswa.mulai
 
 import android.app.ActivityManager
 import android.content.BroadcastReceiver
